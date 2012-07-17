@@ -1,42 +1,3 @@
-// Time-stamp: <2012-07-17 13:38 kyloma>
-//
-// ==UserScript==
-// @name           ServiceNow-linker
-// @namespace      http://userscripts.org/users/?
-// @description    Turns service now ticket numbers into links to service now
-// @include        *
-// ==/UserScript==
-
-
-//Casey Watts would like to thank ferk for the apt-linker implementation of James Padolsey's findAndReplace function
-
-
-
-// I would like to thank James Padolsey (http://james.padolsey.com/)
-// for the findAndReplace function
-
-// Copyright (C) 2009 Fernando Carmona Varo
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// The GNU General Public License is available by visiting
-//   http://www.gnu.org/copyleft/gpl.html
-// or by writing to
-//   Free Software Foundation, Inc.
-//   51 Franklin Street, Fifth Floor
-//   Boston, MA  02110-1301
-//   USA
-
-
-
 /* == findAndReplace ==
  * (By James Padolsey  http://james.padolsey.com/javascript/find-and-replace-text-with-javascript/)
  *
@@ -55,8 +16,6 @@
  * under which the search will take place. By default it's set to document.body.
  */
 
-
-//function injectit (){
 
   function findAndReplace(searchText, replacement, searchNode) {
     if (!searchText || typeof replacement === 'undefined') {
@@ -93,41 +52,24 @@
     }
   }
 
+
   function findAndReplaceNetIDs(){
     findAndReplace('\\b[A-z]{2,4}\\d{1,4}\\b',
                    '<a href=\"http://directory.yale.edu/phonebook/index.htm?searchString=netid%3D$&\" target=\"_blank\">$&</a>'
-                   //function(netid) {
-                   //return '<a href="http://directory.yale.edu/phonebook/index.htm?searchString=netid%3D' + netid + '">' + netid + '</a>'
-                   //}
-                   //"lol"
-                  );
+    );
   }
 
 
-//}
 
+//call as a standalone page
+jQuery(document).ready(function(){findAndReplaceNetIDs()})
 
-//function putscriptiniframe(theframe, injectit){
-  //var script = document.createElement( 'script' );
-  //script.type = 'text/javascript';
-  //script.text = injectit;
-  //jQuery(theframe).append( script );
-//}
+//call when navigating using iframes
+//(assuming the function is within the iframe, which it will be if it was present in the DOM when when this function was called
+jQuery("iframe").load(function(){findAndReplaceNetIDs()})
 
-
-
-//injectit(); // on normal page
-//putscriptiniframe('iframe#gsft_main', injectit); // in iframe
-//jQuery('iframe#gsft_main').findAndReplaceNetIDs()
-
-
-
-jQuery(document).ready(function(){findAndReplaceNetIDs()}) //call as a standalone page
-jQuery("iframe#gsft_main").load(function(){findAndReplaceNetIDs()}) //call when navigationg within service now (which changes this particular iframe)
-
-
-//for migration tool
-setTimeout(function(){// do it again after other js has gotten out of the way
+// do it again after other js has gotten out of the way (for migration tool)
+setTimeout(function(){
   findAndReplaceNetIDs()
 },2000)
 
