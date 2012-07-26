@@ -1,7 +1,7 @@
 {
   "name": "Yale NetID Linker",
-  "version": "1.2",
-  "manifest_version": 3,
+  "version": "1.3",
+  "manifest_version": 4,
   "description": "Turns each netid into a link to the person's Yale Phonebook entry",
   "content_scripts": [{
     "matches": ["http://*/*", "https://*/*"],

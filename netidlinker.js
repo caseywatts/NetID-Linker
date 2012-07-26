@@ -73,3 +73,22 @@ setTimeout(function(){
   findAndReplaceNetIDs()
 },2000)
 
+
+//Base function borrowed from the bookmarklet Themba posted on Yammer
+  function openselectedinphonebook(){
+    q = document.getSelection();
+    for (i = 0; i < frames.length; i++) {
+      q = frames[i].document.getSelection();
+      if (q) break;
+    }
+    if (!q) void(q = prompt('Enter Name for Yale Directory Search. You can also highlight a word on this web page before clicking Yale Search.', ''));
+    if (q) location = 'http://directory.yale.edu/phonebook/index.htm?Query=' + escape(q) + '+return+all'
+  }
+
+//injects the script and accesskey-link (hidden)
+jQuery(document).ready(function(){
+  var script = document.createElement('script');
+  script.appendChild(document.createTextNode(openselectedinphonebook));
+  (document.body || document.head || document.documentElement).appendChild(script);
+  $('body').append('<a style="opacity: 0px; display: none;" href="#" accesskey="p" onclick="openselectedinphonebook()"> </a>')
+})
