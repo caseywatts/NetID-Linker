@@ -81,8 +81,9 @@ setTimeout(function(){
       q = frames[i].document.getSelection();
       if (q) break;
     }
+    //this void case doesn't actually work for me, it's never void in the newest Chrome on OS X (Jul 26, 2012)
     if (!q) void(q = prompt('Enter Name for Yale Directory Search. You can also highlight a word on this web page before clicking Yale Search.', ''));
-    if (q) location = 'http://directory.yale.edu/phonebook/index.htm?Query=' + escape(q) + '+return+all'
+    if (q) window.open('http://directory.yale.edu/phonebook/index.htm?Query=' + escape(q) + '+return+all')
   }
 
 //injects the script and accesskey-link (hidden)
